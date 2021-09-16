@@ -1,3 +1,5 @@
+package EmailChecker;
+
 public class EmailChecker {
 
     public boolean hasAtSign(String email) {

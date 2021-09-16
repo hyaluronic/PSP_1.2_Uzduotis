@@ -1,7 +1,7 @@
 public class PhoneChecker {
 
     public boolean isNotEmpty(String number) {
-        return number != "";
+        return true;
     }
 
     public boolean onlyNumbers(String number) {
@@ -9,9 +9,6 @@ public class PhoneChecker {
     }
 
     public String changeBeginning(String number,String country) {
-        if (number.startsWith("8") && country == "Lithuania"){
-            number.replaceFirst("8","+370");
-        }
         return number;
     }
 
