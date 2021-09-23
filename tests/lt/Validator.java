@@ -1,4 +1,4 @@
-package lt.mif.psp
+package lt;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,11 +44,13 @@ class Validator {
 
     @Test
     void phoneValidator_isNotLongerThanX() {
+        phone.addValidationRule("Lithuania", new ValidationRule(11, "8", "+370"));
         assertTrue(phone.numberLength("+37061234567","Lithuania"));
     }
 
     @Test
     void phoneValidator_validCountryCode() {
+        phone.addValidationRule("Lithuania", new ValidationRule(11, "8", "+370"));
         assertTrue(phone.checkCountryCode("+37061234567","Lithuania"));
     }
 
