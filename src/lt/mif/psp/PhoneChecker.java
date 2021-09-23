@@ -1,16 +1,13 @@
-package lt;
+package lt.mif.psp;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static lt.ValidationConstants.DEFAULT_VALIDATION_RULE;
-import static lt.ValidationConstants.NUMBERS;
 
 public class PhoneChecker {
     private Map<String, ValidationRule> validationRules = new HashMap<>();
 
     public PhoneChecker() {
-        this.validationRules.put("DEFAULT_VALIDATION_RULE", DEFAULT_VALIDATION_RULE);
+        this.validationRules.put("DEFAULT_VALIDATION_RULE", ValidationConstants.DEFAULT_VALIDATION_RULE);
     }
 
     public void setValidationRules(Map<String, ValidationRule> validationRules) {
@@ -37,7 +34,7 @@ public class PhoneChecker {
         boolean valid = true;
         for(int i = 0; i < number.length(); i++){
             ch = number.charAt(i);
-            if(!NUMBERS.contains(ch)){
+            if(!ValidationConstants.NUMBERS.contains(ch)){
                 valid = false;
             }
         }

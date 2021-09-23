@@ -1,15 +1,13 @@
-package lt;
+package lt.mif.psp;
 
 import java.util.List;
-
-import static lt.ValidationConstants.SPECIAL_SYMBOLS;
 
 public class PasswordChecker {
 
     private List<Character> specialSymbols;
 
     public PasswordChecker() {
-        this.specialSymbols = SPECIAL_SYMBOLS;
+        this.specialSymbols = ValidationConstants.SPECIAL_SYMBOLS;
     }
 
     public void setSpecialSymbols(List<Character> specialSymbols) {

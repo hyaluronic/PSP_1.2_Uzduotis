@@ -1,8 +1,6 @@
-package lt;
+package lt.mif.psp;
 
 import java.util.Locale;
-
-import static lt.ValidationConstants.SPECIAL_SYMBOLS;
 
 public class EmailChecker {
 
@@ -16,8 +14,8 @@ public class EmailChecker {
         String domain = getEmailDomain(email);
         return prefix != null &&
                 domain != null &&
-                SPECIAL_SYMBOLS.stream().noneMatch(s -> prefix.contains(s.toString())) &&
-                SPECIAL_SYMBOLS.stream().noneMatch(s -> domain.contains(s.toString()));
+                ValidationConstants.SPECIAL_SYMBOLS.stream().noneMatch(s -> prefix.contains(s.toString())) &&
+                ValidationConstants.SPECIAL_SYMBOLS.stream().noneMatch(s -> domain.contains(s.toString()));
     }
 
     public boolean correctTLDCheck(String email) {
@@ -64,7 +62,7 @@ public class EmailChecker {
             return false;
         }
         String subDomain = domain.contains(".") ? domain.substring(0, domain.indexOf('.')) : domain;
-        if(SPECIAL_SYMBOLS.stream().anyMatch(s -> subDomain.contains(s.toString()))){
+        if(ValidationConstants.SPECIAL_SYMBOLS.stream().anyMatch(s -> subDomain.contains(s.toString()))){
             return false;
         }
         if (subDomain.charAt(0) == '-' || subDomain.charAt(subDomain.length() - 1) == '-') {

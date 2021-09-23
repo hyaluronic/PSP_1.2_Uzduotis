@@ -1,4 +1,4 @@
-package lt;
+package lt.mif.psp;
 
 public class ValidationRule {
     private final int length;

@@ -1,4 +1,4 @@
-package lt;
+package lt.mif.psp;
 
 import org.junit.jupiter.api.Test;
 
