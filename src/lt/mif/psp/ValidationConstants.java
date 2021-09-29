@@ -1,10 +1,10 @@
 package lt.mif.psp;
 
 import java.util.List;
+import java.util.Set;
 
 public class ValidationConstants {
-    public static final List<Character> NUMBERS = List.of('1', '2' ,'3', '4', '5', '6', '7', '8', '9', '0');
     public static final ValidationRule DEFAULT_VALIDATION_RULE = new ValidationRule(11, "8", "+370");
-    public static final List<Character> SPECIAL_SYMBOLS = List.of('!', '#', '$', '%', '^', '&', '*', '(',
+    public static final Set<Character> SPECIAL_SYMBOLS = Set.of('!', '#', '$', '%', '^', '&', '*', '(',
             ')', '/', '~', '[', ']', '@');
 }

@@ -1,17 +1,25 @@
 package lt.mif.psp;
 
 import java.util.List;
+import java.util.Set;
 
 public class PasswordChecker {
 
-    private List<Character> specialSymbols;
+    private Set<Character> specialSymbols;
 
     public PasswordChecker() {
         this.specialSymbols = ValidationConstants.SPECIAL_SYMBOLS;
     }
 
-    public void setSpecialSymbols(List<Character> specialSymbols) {
-        this.specialSymbols = specialSymbols;
+    /***
+     *
+     * @param specialSymbols
+     * sets specialSymbols if 'specialSymbols' is not null.
+     */
+    public void setSpecialSymbols(Set<Character> specialSymbols) {
+        if(specialSymbols != null){
+            this.specialSymbols = specialSymbols;
+        }
     }
 
     public void addSpecialSymbol(char specialSymbol) {

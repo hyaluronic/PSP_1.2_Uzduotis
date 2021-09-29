@@ -1,8 +1,35 @@
 package lt.mif.psp;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class EmailChecker {
+
+    private Set<Character> specialSymbols;
+
+    public EmailChecker() {
+        this.specialSymbols = ValidationConstants.SPECIAL_SYMBOLS;
+    }
+
+    /***
+     *
+     * @param specialSymbols
+     * sets specialSymbols if 'specialSymbols' is not null.
+     */
+    public void setSpecialSymbols(Set<Character> specialSymbols) {
+        if(specialSymbols != null){
+            this.specialSymbols = specialSymbols;
+        }
+    }
+
+    public void addSpecialSymbol(char specialSymbol) {
+        this.specialSymbols.add(specialSymbol);
+    }
+
+    public void removeSpecialSymbol(char specialSymbol) {
+        this.specialSymbols.remove(specialSymbol);
+    }
 
     public boolean hasAtSign(String email) {
          return email != null && email.contains("@");
@@ -14,8 +41,8 @@ public class EmailChecker {
         String domain = getEmailDomain(email);
         return prefix != null &&
                 domain != null &&
-                ValidationConstants.SPECIAL_SYMBOLS.stream().noneMatch(s -> prefix.contains(s.toString())) &&
-                ValidationConstants.SPECIAL_SYMBOLS.stream().noneMatch(s -> domain.contains(s.toString()));
+                specialSymbols.stream().noneMatch(s -> prefix.contains(s.toString())) &&
+                specialSymbols.stream().noneMatch(s -> domain.contains(s.toString()));
     }
 
     public boolean correctTLDCheck(String email) {
@@ -27,7 +54,7 @@ public class EmailChecker {
             return false;
         }
         String[] domains = domain.split("\\.");
-        return validateSubAndTopDomain(domains[domains.length-1].toLowerCase(Locale.ROOT));
+        return validateEmailDomainLength(domains[domains.length-1]) && validateSubAndTopDomain(domains[domains.length-1]);
     }
 
     public boolean correctDomainCheck(String email) {
@@ -35,7 +62,7 @@ public class EmailChecker {
             return false;
         }
         String domain = getEmailDomain(email);
-        return validateEmailDomainLength(domain) && validateSubAndTopDomain(domain.toLowerCase(Locale.ROOT));
+        return validateEmailDomainLength(domain) && validateSubAndTopDomain(domain);
     }
 
     public boolean notEmpty(String email) {
@@ -43,11 +70,11 @@ public class EmailChecker {
     }
 
     private String getEmailDomain(String email){
-        return hasAtSign(email) && email.length() >= email.indexOf("@") ? email.substring(email.indexOf('@') + 1) : null;
+        return hasAtSign(email) && email.length() >= email.indexOf("@") ? email.substring(email.indexOf('@') + 1).toLowerCase(Locale.ROOT) : null;
     }
 
     private String getEmailPrefix(String email){
-        return hasAtSign(email) ? email.substring(0, email.indexOf('@')-1) : null;
+        return hasAtSign(email) ? email.substring(0, email.indexOf('@')).toLowerCase(Locale.ROOT) : null;
     }
 
     private boolean validateEmailDomainLength(String domain){
@@ -62,7 +89,7 @@ public class EmailChecker {
             return false;
         }
         String subDomain = domain.contains(".") ? domain.substring(0, domain.indexOf('.')) : domain;
-        if(ValidationConstants.SPECIAL_SYMBOLS.stream().anyMatch(s -> subDomain.contains(s.toString()))){
+        if(specialSymbols.stream().anyMatch(s -> subDomain.contains(s.toString()))){
             return false;
         }
         if (subDomain.charAt(0) == '-' || subDomain.charAt(subDomain.length() - 1) == '-') {
