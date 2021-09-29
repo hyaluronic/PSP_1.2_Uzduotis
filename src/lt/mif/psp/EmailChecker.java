@@ -12,7 +12,7 @@ public class EmailChecker {
         this.specialSymbols = ValidationConstants.SPECIAL_SYMBOLS;
     }
 
-    /***
+    /**
      *
      * @param specialSymbols
      * sets specialSymbols if 'specialSymbols' is not null.
@@ -22,21 +22,39 @@ public class EmailChecker {
             this.specialSymbols = specialSymbols;
         }
     }
-
+    /**
+     *
+     * @param specialSymbol
+     * adds 'specialSymbol' to specialSymbols set if it is not there.
+     */
     public void addSpecialSymbol(char specialSymbol) {
         this.specialSymbols.add(specialSymbol);
     }
 
+    /**
+     *
+     * @param specialSymbol
+     * removes 'specialSymbol' from specialSymbols set if it is there.
+     */
     public void removeSpecialSymbol(char specialSymbol) {
         this.specialSymbols.remove(specialSymbol);
     }
 
+    /**
+     *
+     * @param email
+     * @return true if 'email' is not null and contains '@' sign.
+     */
     public boolean hasAtSign(String email) {
          return email != null && email.contains("@");
     }
 
+    /**
+     *
+     * @param email
+     * @return true if 'email' has '@' sign and no specialSymbols.
+     */
     public boolean checkBadSymbols(String email) {
-
         String prefix = getEmailPrefix(email);
         String domain = getEmailDomain(email);
         return prefix != null &&
@@ -45,6 +63,12 @@ public class EmailChecker {
                 specialSymbols.stream().noneMatch(s -> domain.contains(s.toString()));
     }
 
+    /**
+     *
+     * @param email
+     * @return true if 'email' is not null, 'email' has TLD, TLD is not null, length from 2 to 253,
+     * and has no specialCharacters and first and last character is not '-'.
+     */
     public boolean correctTLDCheck(String email) {
         if(email == null){
             return false;
@@ -54,19 +78,35 @@ public class EmailChecker {
             return false;
         }
         String[] domains = domain.split("\\.");
-        return validateEmailDomainLength(domains[domains.length-1]) && validateSubAndTopDomain(domains[domains.length-1]);
+        String TLD = domains[domains.length-1];
+        return validateEmailDomainLength(TLD) &&
+            specialSymbols.stream().noneMatch(s -> TLD.contains(s.toString())) &&
+            validateSubAndTopDomain(TLD);
     }
 
+    /**
+     *
+     * @param email
+     * @return true if 'email' is not null, 'email' has domain, domain is not null, length from 2 to 253,
+     * and has no specialCharacters and first and last character is not '-'.
+     */
     public boolean correctDomainCheck(String email) {
         if(email == null){
             return false;
         }
         String domain = getEmailDomain(email);
-        return validateEmailDomainLength(domain) && validateSubAndTopDomain(domain);
+        return validateEmailDomainLength(domain) &&
+            specialSymbols.stream().noneMatch(s -> domain.contains(s.toString())) &&
+            validateSubAndTopDomain(domain);
     }
 
+    /**
+     *
+     * @param email
+     * @return true if 'email' is not null and is not empty,
+     */
     public boolean notEmpty(String email) {
-        return !email.isBlank();
+        return !email.isEmpty();
     }
 
     private String getEmailDomain(String email){

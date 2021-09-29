@@ -4,61 +4,64 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PhoneChecker {
-    private Map<String, ValidationRule> validationRules = new HashMap<>();
+    private final Map<String, ValidationRule> validationRules = new HashMap<>();
 
     public PhoneChecker() {
         this.validationRules.put("DEFAULT_VALIDATION_RULE", ValidationConstants.DEFAULT_VALIDATION_RULE);
     }
 
+    /**
+     *
+     * @param instruction
+     * @param validationRule
+     * puts 'instruction' as key and 'validationRule' as value to validationRules map
+     * if 'instruction' and 'validationRule' is not null.
+     */
     public void addValidationRule(String instruction, ValidationRule validationRule) {
-        this.validationRules.put(instruction, validationRule);
+        if (instruction != null && validationRule != null) {
+            this.validationRules.put(instruction, validationRule);
+        }
     }
 
-    /***
+    /**
      *
      * @param instruction
      * Removes ValidationRule form validationRules with key 'instruction'.
-     * cannot remove DEFAULT_VALIDATION_RULE.
+     * Cannot remove DEFAULT_VALIDATION_RULE.
      */
     public void removeValidationRule(String instruction) {
-        if(!instruction.equals("DEFAULT_VALIDATION_RULE")){
+        if (instruction != null && !instruction.equals("DEFAULT_VALIDATION_RULE")) {
             this.validationRules.remove(instruction);
         }
     }
 
-    /***
+    /**
      *
      * @param number
-     * @return true if 'number' is not null or has non whitespace characters,
-     * false otherwise.
+     * @return true if 'number' is not null and is not empty,
      */
     public boolean isNotEmpty(String number) {
-        return !number.isBlank();
+        return number != null && !number.isEmpty();
     }
 
-    /***
+    /**
      *
      * @param number
-     * @return true if there is only numbers in 'number',
+     * if first character is '+', skips it.
+     * @return true if 'number' is not blank and there is only numbers in 'number',
      * false otherwise.
      */
     public boolean onlyNumbers(String number) {
         if (number == null) {
             return false;
         }
-        char ch;
-        boolean valid = true;
-        for (int i = 0; i < number.length(); i++) {
-            ch = number.charAt(i);
-            if (!Character.isDigit(ch)) {
-                valid = false;
-                break;
-            }
+        if (number.startsWith("+")) {
+            number = number.substring(1);
         }
-        return valid;
+        return !number.isBlank() && number.chars().allMatch(Character::isDigit);
     }
 
-    /***
+    /**
      *
      * @param number
      * @return if number is not null changes its prefixShort to prefixLong
@@ -69,7 +72,7 @@ public class PhoneChecker {
         return changeBeginning(number, null);
     }
 
-    /***
+    /**
      *
      * @param number
      * @param country
@@ -88,7 +91,7 @@ public class PhoneChecker {
         return number;
     }
 
-    /***
+    /**
      *
      * @param number
      * @return true if 'number' prefix starts with prefixShort or prefixLong
@@ -99,7 +102,7 @@ public class PhoneChecker {
         return isPrefixValid(number, null);
     }
 
-    /***
+    /**
      *
      * @param number
      * @param instruction
@@ -113,7 +116,7 @@ public class PhoneChecker {
         return number.startsWith(validationRule.getPrefixShort()) || number.startsWith(validationRule.getPrefixLong());
     }
 
-    /***
+    /**
      *
      * @param number
      * @return true if 'number' length is equal or greater than length
@@ -124,7 +127,7 @@ public class PhoneChecker {
         return numberLength(number, null);
     }
 
-    /***
+    /**
      *
      * @param number
      * @param country
@@ -143,7 +146,7 @@ public class PhoneChecker {
         return number.length() == getValidationRule(country).getLength();
     }
 
-    /***
+    /**
      *
      * @param number
      * @return true if 'number' starts with prefixLong from
@@ -154,7 +157,7 @@ public class PhoneChecker {
         return checkCountryCode(number, null);
     }
 
-    /***
+    /**
      *
      * @param number
      * @param country
