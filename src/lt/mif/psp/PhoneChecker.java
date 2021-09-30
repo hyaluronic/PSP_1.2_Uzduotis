@@ -11,11 +11,10 @@ public class PhoneChecker {
     }
 
     /**
-     *
-     * @param instruction
+     * @param instruction key to get ValidationRule from validationRules map
      * @param validationRule
      * puts 'instruction' as key and 'validationRule' as value to validationRules map
-     * if 'instruction' and 'validationRule' is not null.
+     *                       if 'instruction' and 'validationRule' is not null.
      */
     public void addValidationRule(String instruction, ValidationRule validationRule) {
         if (instruction != null && validationRule != null) {
@@ -24,10 +23,9 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param instruction
      * Removes ValidationRule form validationRules with key 'instruction'.
-     * Cannot remove DEFAULT_VALIDATION_RULE.
+     *                    Cannot remove DEFAULT_VALIDATION_RULE.
      */
     public void removeValidationRule(String instruction) {
         if (instruction != null && !instruction.equals("DEFAULT_VALIDATION_RULE")) {
@@ -36,7 +34,6 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param number
      * @return true if 'number' is not null and is not empty,
      */
@@ -45,9 +42,7 @@ public class PhoneChecker {
     }
 
     /**
-     *
-     * @param number
-     * if first character is '+', skips it.
+     * @param number if first character is '+', skips it.
      * @return true if 'number' is not blank and there is only numbers in 'number',
      * false otherwise.
      */
@@ -62,40 +57,37 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param number
-     * @return if number is not null changes its prefixShort to prefixLong
-     * by 'DEFAULT_VALIDATION_RULE' (length: 11, prefixShort:"8", prefixLong"+370").
-     * if 'number' prefix does not match ValidationRules prefixShort, returns 'number' unchanged.
+     * @return if number is not null changes its areaCode to countryCode
+     * by 'DEFAULT_VALIDATION_RULE' (length: 11, areaCode:"8", countryCode:"+370").
+     * if 'number' areaCode does not match ValidationRules areaCode, returns 'number' unchanged.
      */
     public String changeBeginning(String number) {
         return changeBeginning(number, null);
     }
 
     /**
-     *
      * @param number
      * @param country
-     * @return if 'number' is not null changes its beginning from prefixShort to prefixLong from ValidationRule by 'country'.
-     * if 'ValidationRule' is not found in the map or 'country' is null changes prefix from '8' to '+370'
-     * if 'number' prefix does not match ValidationRules prefixShort, same 'number' is returned.
+     * @return if 'number' is not null changes its beginning from areaCode to countryCode from ValidationRule by 'country'.
+     * if 'ValidationRule' is not found in the map or 'country' is null changes areaCode from '8' to '+370'
+     * if 'number' areaCode does not match ValidationRules areaCode, same 'number' is returned.
      */
     public String changeBeginning(String number, String country) {
         if (number != null) {
             ValidationRule validationRule = getValidationRule(country);
-            if (number.startsWith(validationRule.getPrefixShort())) {
-                String numberWithoutPrefix = number.substring(validationRule.getPrefixShort().length());
-                number = validationRule.getPrefixLong() + numberWithoutPrefix;
+            if (number.startsWith(validationRule.getAreaCode())) {
+                String numberWithoutPrefix = number.substring(validationRule.getAreaCode().length());
+                number = validationRule.getCountryCode() + numberWithoutPrefix;
             }
         }
         return number;
     }
 
     /**
-     *
      * @param number
-     * @return true if 'number' prefix starts with prefixShort or prefixLong
-     * from ValidationRule found 'DEFAULT_VALIDATION_RULE' (length: 11, prefixShort:"8", prefixLong"+370").
+     * @return true if 'number' prefix starts with areaCode or countryCode
+     * from ValidationRule found 'DEFAULT_VALIDATION_RULE' (length: 11, areaCode:"8", countryCode:"+370").
      * returns false otherwise.
      */
     public boolean isPrefixValid(String number) {
@@ -103,24 +95,22 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param number
-     * @param instruction
-     * @return true if 'number' prefix starts with prefixShort or prefixLong
+     * @param instruction key to get ValidationRule from validationRules map
+     * @return true if 'number' prefix starts with areaCode or countryCode
      * from ValidationRUle found by 'instruction', or 'DEFAULT_VALIDATION_RULE'
-     * (length: 11, prefixShort:"8", prefixLong"+370") if rule is null no rule found.
+     * (length: 11, areaCode:"8", countryCode:"+370") if rule is null no rule found.
      * returns false otherwise.
      */
     public boolean isPrefixValid(String number, String instruction) {
         ValidationRule validationRule = getValidationRule(instruction);
-        return number.startsWith(validationRule.getPrefixShort()) || number.startsWith(validationRule.getPrefixLong());
+        return number.startsWith(validationRule.getAreaCode()) || number.startsWith(validationRule.getCountryCode());
     }
 
     /**
-     *
      * @param number
      * @return true if 'number' length is equal or greater than length
-     * from 'DEFAULT_VALIDATION_RULE' (length: 11, prefixShort:"8", prefixLong"+370").
+     * from 'DEFAULT_VALIDATION_RULE' (length: 11, areaCode:"8", countryCode:"+370").
      * returns false otherwise.
      */
     public boolean numberLength(String number) {
@@ -128,12 +118,11 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param number
      * @param country
      * @return true if 'number' length is equal or greater than length
      * from ValidationRule by 'country', if ValidationRule not found, 'DEFAULT_VALIDATION_RULE'
-     * is used (length: 11, prefixShort:"8", prefixLong"+370").
+     * is used (length: 11, areaCode:"8", countryCode:"+370").
      * returns false otherwise
      */
     public boolean numberLength(String number, String country) {
@@ -147,10 +136,9 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param number
-     * @return true if 'number' starts with prefixLong from
-     * 'DEFAULT_VALIDATION_RULE' (length: 11, prefixShort:"8", prefixLong"+370").
+     * @return true if 'number' starts with countryCode from
+     * 'DEFAULT_VALIDATION_RULE' (length: 11, areaCode:"8", countryCode:"+370").
      * returns false otherwise.
      */
     public boolean checkCountryCode(String number) {
@@ -158,11 +146,10 @@ public class PhoneChecker {
     }
 
     /**
-     *
      * @param number
      * @param country
-     * @return true if 'number' starts with prefixLong from ValidationRule by 'country',
-     * if no rule is found 'DEFAULT_VALIDATION_RULE' (length: 11, prefixShort:"8", prefixLong"+370") is used.
+     * @return true if 'number' starts with countryCode from ValidationRule by 'country',
+     * if no rule is found 'DEFAULT_VALIDATION_RULE' (length: 11, areaCode:"8", countryCode:"+370") is used.
      * returns false otherwise.
      */
     public boolean checkCountryCode(String number, String country) {
@@ -170,8 +157,8 @@ public class PhoneChecker {
             return false;
         }
         ValidationRule validationRule = getValidationRule(country);
-        String numberPrefix = number.substring(0, validationRule.getPrefixLong().length());
-        return numberPrefix.equals(validationRule.getPrefixLong());
+        String numberPrefix = number.substring(0, validationRule.getCountryCode().length());
+        return numberPrefix.equals(validationRule.getCountryCode());
     }
 
     private ValidationRule getValidationRule(String instruction) {

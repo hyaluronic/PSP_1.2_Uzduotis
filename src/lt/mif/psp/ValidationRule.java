@@ -2,24 +2,24 @@ package lt.mif.psp;
 
 public class ValidationRule {
     private final int length;
-    private final String prefixShort;
-    private final String prefixLong;
+    private final String areaCode;
+    private final String countryCode;
 
-    public ValidationRule(int length, String prefixShort, String prefixLong) {
+    public ValidationRule(int length, String areaCode, String prefixLong) {
         this.length = length;
-        this.prefixShort = prefixShort;
-        this.prefixLong = prefixLong;
+        this.areaCode = areaCode;
+        this.countryCode = prefixLong;
     }
 
     public int getLength() {
         return length;
     }
 
-    public String getPrefixShort() {
-        return prefixShort;
+    public String getAreaCode() {
+        return areaCode;
     }
 
-    public String getPrefixLong() {
-        return prefixLong;
+    public String getCountryCode() {
+        return countryCode;
     }
 }

@@ -1,17 +1,17 @@
 package lt.mif.psp;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class PasswordChecker {
 
-    private Set<Character> specialSymbols;
+    private Set<Character> specialSymbols = new HashSet<>();
 
     public PasswordChecker() {
-        this.specialSymbols = ValidationConstants.SPECIAL_SYMBOLS;
+        specialSymbols.addAll(ValidationConstants.SPECIAL_SYMBOLS);
     }
 
     /**
-     *
      * @param specialSymbols
      * sets specialSymbols if 'specialSymbols' is not null.
      */
@@ -22,7 +22,6 @@ public class PasswordChecker {
     }
 
     /**
-     *
      * @param specialSymbol
      * adds 'specialSymbol' to specialSymbols set if it is not there.
      */
@@ -31,7 +30,6 @@ public class PasswordChecker {
     }
 
     /**
-     *
      * @param specialSymbol
      * removes 'specialSymbol' from specialSymbols set if it is there.
      */
@@ -40,7 +38,6 @@ public class PasswordChecker {
     }
 
     /**
-     *
      * @param password
      * @return true if 'password' is not blank and
      * length is greater or equal to given 'length'.
@@ -51,7 +48,6 @@ public class PasswordChecker {
     }
 
     /**
-     *
      * @param password
      * @return true if 'password' is not blank and
      * has at least one uppercase character.
@@ -62,7 +58,6 @@ public class PasswordChecker {
     }
 
     /**
-     *
      * @param password
      * @return true if 'password' is not blank and
      * has at least one special character.

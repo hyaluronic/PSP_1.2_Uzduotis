@@ -1,6 +1,5 @@
 package lt.mif.psp;
 
-import java.util.List;
 import java.util.Set;
 
 public class ValidationConstants {
