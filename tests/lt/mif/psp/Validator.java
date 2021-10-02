@@ -16,7 +16,7 @@ class Validator {
     //Check if password is longer than X
     @Test
     void passwordValidator_isLongerThanX() {
-        assertTrue(pwd.passwordLength("password",8));
+        assertTrue(pwd.passwordLength("password", 8));
     }
 
     //Check if password has uppercase letters
@@ -46,13 +46,13 @@ class Validator {
     @Ignore("No way PhoneChecker to get instruction for 'Lithuania'")
     @Test
     void phoneValidator_isNotLongerThanX() {
-        assertTrue(phone.numberLength("+37061234567","Lithuania"));
+        assertTrue(phone.numberLength("+37061234567", "Lithuania"));
     }
 
     @Ignore("No way PhoneChecker to get instruction for 'Lithuania'")
     @Test
     void phoneValidator_validCountryCode() {
-        assertTrue(phone.checkCountryCode("+37061234567","Lithuania"));
+        assertTrue(phone.checkCountryCode("+37061234567", "Lithuania"));
     }
 
     //Validate email

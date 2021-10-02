@@ -1,6 +1,5 @@
 package lt.mif.psp;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +14,28 @@ class MyPhoneCheckerTest {
     public void setUp() {
         phoneChecker.addValidationRule("RULE_1", RULE_1);
     }
+
+
+    @Test
+    void validatePhoneNumber() {
+        final String phoneNumber = "+37065555555";
+        assertAll(
+                () -> assertTrue(phoneChecker.isNotEmpty(phoneNumber)),
+                () -> assertTrue(phoneChecker.onlyNumbers(phoneNumber)),
+                () -> assertTrue(phoneChecker.isPrefixValid(phoneNumber)),
+                () -> assertTrue(phoneChecker.numberLength(phoneNumber)),
+                () -> assertTrue(phoneChecker.checkCountryCode(phoneNumber))
+        );
+        final String phoneNumberTwo = "865555555";
+        assertAll(
+                () -> assertTrue(phoneChecker.isNotEmpty(phoneNumberTwo)),
+                () -> assertTrue(phoneChecker.onlyNumbers(phoneNumberTwo)),
+                () -> assertTrue(phoneChecker.isPrefixValid(phoneNumberTwo)),
+                () -> assertTrue(phoneChecker.numberLength(phoneNumberTwo)),
+                () -> assertFalse(phoneChecker.checkCountryCode(phoneNumberTwo))
+        );
+    }
+
 
     //rewrote his test that could not work, as I was unable to do a PR
     @Test

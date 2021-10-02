@@ -6,6 +6,10 @@ import java.util.Set;
 
 public class EmailChecker {
 
+    /**
+     * Default specialSymbols: ('!', '#', '$', '%', '^', '&', '*', '(',
+     *             ')', '/', '~', '[', ']', '@')
+     */
     private Set<Character> specialSymbols = new HashSet<>();
 
     public EmailChecker() {

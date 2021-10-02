@@ -5,6 +5,10 @@ import java.util.Set;
 
 public class PasswordChecker {
 
+    /**
+     * Default specialSymbols: ('!', '#', '$', '%', '^', '&', '*', '(',
+     *             ')', '/', '~', '[', ']', '@')
+     */
     private Set<Character> specialSymbols = new HashSet<>();
 
     public PasswordChecker() {

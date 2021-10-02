@@ -4,12 +4,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MyEmailCheckerTest {
 
     private static final EmailChecker emailChecker = new EmailChecker();
+
+    @Test
+    void validateEmail() {
+        final String email = "emailas@mailas.com";
+        assertAll(
+                () -> assertTrue(emailChecker.hasAtSign(email)),
+                () -> assertTrue(emailChecker.checkBadSymbols(email)),
+                () -> assertTrue(emailChecker.correctDomainCheck(email))
+        );
+        final String emailTwo = "emailas@ma$las.com";
+        assertAll(
+                () -> assertTrue(emailChecker.hasAtSign(emailTwo)),
+                () -> assertFalse(emailChecker.checkBadSymbols(emailTwo)),
+                () -> assertFalse(emailChecker.correctDomainCheck(emailTwo))
+        );
+    }
 
     @Test
     void setSpecialSymbols() {

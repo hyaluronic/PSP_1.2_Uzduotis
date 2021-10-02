@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PhoneChecker {
+
+    /**
+     * DEFAULT_VALIDATION_RULE: (length: 11, areaCode:"8", countryCode:"+370")
+     */
     private final Map<String, ValidationRule> validationRules = new HashMap<>();
 
     public PhoneChecker() {
@@ -111,6 +115,7 @@ public class PhoneChecker {
      * @param number
      * @return true if 'number' length is equal or greater than length
      * from 'DEFAULT_VALIDATION_RULE' (length: 11, areaCode:"8", countryCode:"+370").
+     * If number starts with areaCode it is changed to countryCode before length check.
      * returns false otherwise.
      */
     public boolean numberLength(String number) {
@@ -123,16 +128,19 @@ public class PhoneChecker {
      * @return true if 'number' length is equal or greater than length
      * from ValidationRule by 'country', if ValidationRule not found, 'DEFAULT_VALIDATION_RULE'
      * is used (length: 11, areaCode:"8", countryCode:"+370").
+     * If number starts with areaCode it is changed to countryCode before length check.
      * returns false otherwise
      */
     public boolean numberLength(String number, String country) {
         if (number == null) {
             return false;
         }
-        if (number.contains("+")) {
-            number = number.substring(number.indexOf("+") + 1);
+        ValidationRule validationRule = getValidationRule(country);
+        String changedNumber = changeBeginning(number);
+        if (changedNumber.contains("+")) {
+            changedNumber = changedNumber.substring(changedNumber.indexOf("+") + 1);
         }
-        return number.length() == getValidationRule(country).getLength();
+        return changedNumber.length() == validationRule.getLength();
     }
 
     /**
