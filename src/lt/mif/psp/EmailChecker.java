@@ -74,7 +74,8 @@ public class EmailChecker {
         }
         String[] domains = domain.split("\\.");
         String tld = domains[domains.length - 1];
-        return validateEmailDomainLength(tld) &&
+        return domain.contains(".") &&
+                validateEmailDomainLength(tld) &&
                 specialSymbols.stream().noneMatch(s -> tld.contains(s.toString())) &&
                 validateSubAndTopDomain(tld);
     }
@@ -90,7 +91,7 @@ public class EmailChecker {
         }
         String domain = getEmailDomain(email);
         return validateEmailDomainLength(domain) &&
-                specialSymbols.stream().noneMatch(s -> domain.contains(s.toString())) &&
+                domain.contains(".") &&
                 validateSubAndTopDomain(domain);
     }
 
@@ -118,10 +119,10 @@ public class EmailChecker {
         if (domain == null) {
             return false;
         }
-        if (domain.length() <= 1) {
+        String subDomain = domain.contains(".") ? domain.substring(0, domain.indexOf('.')) : domain;
+        if(subDomain.length() <=1){
             return false;
         }
-        String subDomain = domain.contains(".") ? domain.substring(0, domain.indexOf('.')) : domain;
         if (specialSymbols.stream().anyMatch(s -> subDomain.contains(s.toString()))) {
             return false;
         }

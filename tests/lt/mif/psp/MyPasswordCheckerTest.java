@@ -6,7 +6,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PasswordCheckerTest {
+class MyPasswordCheckerTest {
 
     PasswordChecker passwordChecker = new PasswordChecker();
 
